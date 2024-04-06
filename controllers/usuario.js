@@ -35,7 +35,7 @@ const usuariosPost = async(req, res = response) => {
     let msg = ''; // Inicializa una variable para el mensaje de respuesta
     const usuario = new Usuario(body); // Crea un nuevo objeto Usuario con los datos del cuerpo de la solicitud
     const {id_reserva, id_cotizacion, id_usuario, fechainicio, fechafin, direccionenvio, costoenvio, 
-        descuento, deposito, preciototal, estado} = req.body; // Extrae los datos del cuerpo de la solicitud
+        descuento, deposito, preciototal, estado, email, password} = req.body; // Extrae los datos del cuerpo de la solicitud
     try {
         // Encripta la contraseña antes de guardarla en la base de datos
         const salt = bcrypt.genSaltSync(10); // Genera una sal para el cifrado
@@ -64,13 +64,13 @@ const usuariosPut = async(req, res = response) => {
     const body = req.query; // Extrae los parámetros de la consulta
     console.log(body); // Muestra los parámetros de la consulta por consola
     const {id_reserva, id_cotizacion, id_usuario, fechainicio, fechafin, direccionenvio, costoenvio, 
-        descuento, deposito, preciototal, estado} = req.body; // Extrae los datos del cuerpo de la solicitud
+        descuento, deposito, preciototal, estado, email, password} = req.body; // Extrae los datos del cuerpo de la solicitud
 
     // Busca y actualiza un usuario en la base de datos
     const usuario = await Usuario.findOneAndUpdate({email: email}, {id_reserva:id_reserva, id_cotizacion:id_cotizacion, 
         id_usuario:id_usuario, fechainicio:fechainicio, fechafin:fechafin, 
         direccionenvio:direccionenvio, costoenvio:costoenvio, descuento:descuento, 
-        deposito:deposito, preciototal:preciototal, estado:estado}
+        deposito:deposito, preciototal:preciototal, estado:estado, password:password, email:email}
     );
 
     res.json({
@@ -84,7 +84,7 @@ const usuariosDelete = async(req, res = response) => {
     const body = req.query; // Extrae los parámetros de la consulta
     console.log(body); // Muestra los parámetros de la consulta por consola
     const {id_reserva, id_cotizacion, id_usuario, fechainicio, fechafin, direccionenvio, costoenvio, 
-        descuento, deposito, preciototal, estado} = req.query; // Extrae los datos del cuerpo de la solicitud
+        descuento, deposito, preciototal, estado, email, password} = req.query; // Extrae los datos del cuerpo de la solicitud
     // Busca y elimina un usuario en la base de datos
     const usuario = await Usuario.findOneAndDelete({email: email});
     res.json({
